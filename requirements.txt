@@ -1,0 +1,15 @@
+pandas
+numpy
+scikit-learn
+statsmodels
+joblib
+tensorflow
+kagglehub
+matplotlib
+seaborn
+plotly
+streamlit
+dfply
+kagglehub
+imblearn
+pmdarima
