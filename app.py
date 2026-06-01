@@ -17,37 +17,400 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --- CUSTOM CSS FOR STOCK PEERS AESTHETIC & LOCKED SIDEBAR ---
+# --- MODERN CSS + JS REDESIGN ---
 st.markdown(
     """
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <style>
-    /* Styling the KPI Metric Cards */
-    div[data-testid="metric-container"] {
-        background-color: #262730;
-        border: 1px solid #3A3B45;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    /* =====================================================
+       GLOBAL RESETS & TYPOGRAPHY
+    ===================================================== */
+    html, body, [class*="css"], .stApp {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        background-color: #06070D !important;
+        color: #E8EAED !important;
     }
-    .block-container { padding-top: 2rem; }
-    
-    /* Hide only the top-right menu (Toolbar), NOT the whole header */
-    [data-testid="stToolbar"] {visibility: hidden;}
-    footer {visibility: hidden;}
-    
-    /* Make the header transparent so it blends perfectly into the dark theme */
-    [data-testid="stHeader"] {background: transparent;}
-    
-    /* --- LOCK SIDEBAR IN PLACE --- */
-    /* Hide the collapse button inside the expanded sidebar */
-    [data-testid="stSidebarCollapseButton"] {
-        display: none;
+
+    /* Main content area */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 3rem !important;
+        max-width: 1400px !important;
     }
-    /* Hide the expand button just in case it ever accidentally collapses */
+
+    /* =====================================================
+       HEADINGS — BOLD & LARGE
+    ===================================================== */
+    h1, .stTitle, [data-testid="stHeadingWithActionElements"] h1 {
+        font-size: 2.8rem !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.03em !important;
+        background: linear-gradient(135deg, #FFFFFF 0%, #A8B8FF 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        line-height: 1.15 !important;
+        margin-bottom: 0.4rem !important;
+    }
+
+    h2 {
+        font-size: 2rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.02em !important;
+        color: #FFFFFF !important;
+    }
+
+    h3, .stMarkdown h3 {
+        font-size: 1.35rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.01em !important;
+        color: #C8D0FF !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    h4 {
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: #A8B8FF !important;
+    }
+
+    p, .stMarkdown p, label, .stSelectbox label, .stMultiSelect label {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        line-height: 1.7 !important;
+        color: #B0BCC8 !important;
+    }
+
+    /* =====================================================
+       SIDEBAR — DARK GLASS PANEL
+    ===================================================== */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0D0F1A 0%, #111420 100%) !important;
+        border-right: 1px solid rgba(168, 184, 255, 0.12) !important;
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    [data-testid="stSidebar"] h2 {
+        font-size: 1.4rem !important;
+        font-weight: 800 !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        background: none !important;
+    }
+
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] .stMarkdown p {
+        font-size: 0.88rem !important;
+        color: #8090A8 !important;
+    }
+
+    [data-testid="stSidebar"] hr {
+        border-color: rgba(168, 184, 255, 0.15) !important;
+        margin: 1rem 0 !important;
+    }
+
+    /* Sidebar section label */
+    [data-testid="stSidebar"] h3 {
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase !important;
+        color: #5060A0 !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Lock sidebar — hide collapse buttons */
+    [data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"] {
-        display: none;
+        display: none !important;
     }
+
+    /* =====================================================
+       SELECTBOX & MULTISELECT — STYLED INPUTS
+    ===================================================== */
+    [data-testid="stSelectbox"] > div > div,
+    [data-testid="stMultiSelect"] > div > div {
+        background: rgba(255,255,255,0.04) !important;
+        border: 1.5px solid rgba(168, 184, 255, 0.2) !important;
+        border-radius: 10px !important;
+        color: #E8EAED !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        transition: border-color 0.2s ease !important;
+    }
+
+    [data-testid="stSelectbox"] > div > div:hover,
+    [data-testid="stMultiSelect"] > div > div:hover {
+        border-color: rgba(168, 184, 255, 0.5) !important;
+    }
+
+    /* =====================================================
+       KPI METRIC CARDS — GLASSMORPHISM
+    ===================================================== */
+    div[data-testid="metric-container"] {
+        background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(168,184,255,0.04) 100%) !important;
+        border: 1px solid rgba(168, 184, 255, 0.18) !important;
+        border-radius: 16px !important;
+        padding: 22px 20px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+        backdrop-filter: blur(12px) !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    div[data-testid="metric-container"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(168,184,255,0.3) !important;
+    }
+
+    div[data-testid="metric-container"] [data-testid="stMetricLabel"] {
+        font-size: 0.78rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: #6070A0 !important;
+    }
+
+    div[data-testid="metric-container"] [data-testid="stMetricValue"] {
+        font-size: 2rem !important;
+        font-weight: 900 !important;
+        color: #FFFFFF !important;
+        letter-spacing: -0.03em !important;
+        line-height: 1.2 !important;
+    }
+
+    /* =====================================================
+       EXPANDER — CLEAN ACCORDION
+    ===================================================== */
+    [data-testid="stExpander"] {
+        background: rgba(255,255,255,0.03) !important;
+        border: 1px solid rgba(168, 184, 255, 0.12) !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+    }
+
+    [data-testid="stExpander"] summary {
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+        color: #C8D0FF !important;
+        padding: 1rem 1.25rem !important;
+    }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .stButton > button,
+    [data-testid="stFormSubmitButton"] > button {
+        background: linear-gradient(135deg, #4A5AFF 0%, #7B8BFF 100%) !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.02em !important;
+        padding: 0.6rem 1.4rem !important;
+        box-shadow: 0 4px 20px rgba(74, 90, 255, 0.35) !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+    }
+
+    .stButton > button:hover,
+    [data-testid="stFormSubmitButton"] > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 30px rgba(74, 90, 255, 0.55) !important;
+        background: linear-gradient(135deg, #5A6AFF 0%, #8B9BFF 100%) !important;
+    }
+
+    /* Download button */
+    [data-testid="stDownloadButton"] > button {
+        background: rgba(255,255,255,0.05) !important;
+        color: #A8B8FF !important;
+        border: 1.5px solid rgba(168, 184, 255, 0.3) !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        transition: all 0.2s ease !important;
+    }
+
+    [data-testid="stDownloadButton"] > button:hover {
+        background: rgba(168, 184, 255, 0.1) !important;
+        border-color: rgba(168, 184, 255, 0.6) !important;
+    }
+
+    /* =====================================================
+       NUMBER INPUT
+    ===================================================== */
+    [data-testid="stNumberInput"] input {
+        background: rgba(255,255,255,0.05) !important;
+        border: 1.5px solid rgba(168,184,255,0.2) !important;
+        border-radius: 10px !important;
+        color: #FFFFFF !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* =====================================================
+       DATAFRAME / TABLE
+    ===================================================== */
+    [data-testid="stDataFrame"] {
+        border: 1px solid rgba(168, 184, 255, 0.12) !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+
+    /* =====================================================
+       INFO / ALERT BOXES
+    ===================================================== */
+    [data-testid="stInfo"] {
+        background: rgba(74, 90, 255, 0.08) !important;
+        border: 1px solid rgba(74, 90, 255, 0.25) !important;
+        border-radius: 12px !important;
+        font-size: 0.9rem !important;
+    }
+
+    [data-testid="stWarning"] {
+        background: rgba(255, 180, 50, 0.08) !important;
+        border: 1px solid rgba(255, 180, 50, 0.25) !important;
+        border-radius: 12px !important;
+    }
+
+    [data-testid="stSuccess"] {
+        background: rgba(0, 230, 118, 0.08) !important;
+        border: 1px solid rgba(0, 230, 118, 0.25) !important;
+        border-radius: 12px !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* =====================================================
+       HORIZONTAL DIVIDER
+    ===================================================== */
+    hr {
+        border: none !important;
+        border-top: 1px solid rgba(168, 184, 255, 0.1) !important;
+        margin: 2rem 0 !important;
+    }
+
+    /* =====================================================
+       HEADER — HIDE TOOLBAR & FOOTER
+    ===================================================== */
+    [data-testid="stToolbar"] { visibility: hidden !important; }
+    footer { visibility: hidden !important; }
+    [data-testid="stHeader"] { background: transparent !important; }
+
+    /* =====================================================
+       PLOTLY CHART CONTAINER
+    ===================================================== */
+    [data-testid="stPlotlyChart"] {
+        border-radius: 16px !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(168, 184, 255, 0.1) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    /* =====================================================
+       INSIGHT CALLOUT BOXES
+       Target the blockquote-style insight paragraphs
+    ===================================================== */
+    .stMarkdown p:has(> strong:first-child) {
+        background: rgba(168, 184, 255, 0.05) !important;
+        border-left: 3px solid #4A5AFF !important;
+        border-radius: 0 8px 8px 0 !important;
+        padding: 0.75rem 1rem !important;
+        margin: 0.5rem 0 !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* =====================================================
+       FORM CONTAINER
+    ===================================================== */
+    [data-testid="stForm"] {
+        background: rgba(255,255,255,0.03) !important;
+        border: 1px solid rgba(168,184,255,0.12) !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+    }
+
+    /* =====================================================
+       COLUMNS GAP
+    ===================================================== */
+    [data-testid="column"] {
+        gap: 1rem !important;
+    }
+
+    /* =====================================================
+       SCROLLBAR STYLING
+    ===================================================== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(168, 184, 255, 0.25);
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(168, 184, 255, 0.5);
+    }
+
     </style>
+
+    <script>
+    // =====================================================
+    // JS: Animate metric cards on load + scroll-in effect
+    // =====================================================
+    (function() {
+        function animateOnLoad() {
+            // Fade-in metrics with stagger
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to   { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes slideInLeft {
+                    from { opacity: 0; transform: translateX(-16px); }
+                    to   { opacity: 1; transform: translateX(0); }
+                }
+                @keyframes glowPulse {
+                    0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08); }
+                    50% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(74,90,255,0.15), inset 0 1px 0 rgba(255,255,255,0.08); }
+                }
+
+                div[data-testid="metric-container"] {
+                    animation: fadeInUp 0.5s ease forwards, glowPulse 4s ease-in-out infinite !important;
+                }
+
+                h1, .stTitle { animation: fadeInUp 0.4s ease forwards !important; }
+
+                [data-testid="stSidebar"] {
+                    animation: slideInLeft 0.5s ease forwards !important;
+                }
+
+                [data-testid="stPlotlyChart"] {
+                    animation: fadeInUp 0.6s ease forwards !important;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Stagger metric cards
+            const observer = new MutationObserver(() => {
+                const metrics = document.querySelectorAll('div[data-testid="metric-container"]');
+                metrics.forEach((el, i) => {
+                    el.style.animationDelay = (i * 0.08) + 's';
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', animateOnLoad);
+        } else {
+            animateOnLoad();
+        }
+    })();
+    </script>
 """,
     unsafe_allow_html=True,
 )
