@@ -518,7 +518,7 @@ if page == "EDA Dashboard":
         st.markdown(
             "Explore the raw records driving this dashboard. The table below automatically updates based on your active sidebar filters."
         )
-        st.dataframe(filtered_weather, width='stretch', height=250)
+        st.dataframe(filtered_weather, height=250)
 
         csv_data = filtered_weather.to_csv(index=False).encode("utf-8")
         st.download_button(
@@ -591,7 +591,7 @@ if page == "EDA Dashboard":
                 xaxis=dict(dtick=1),
                 height=450,
             )
-            st.plotly_chart(fig, width='stretch')
+            st.plotly_chart(fig)
 
             st.markdown("""
             💡 **Key Insights:**
@@ -622,7 +622,7 @@ if page == "EDA Dashboard":
         fig2.update_layout(
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", height=450
         )
-        st.plotly_chart(fig2, width='stretch')
+        st.plotly_chart(fig2)
 
         st.markdown("""
         💡 **Key Insights:**
@@ -656,7 +656,7 @@ if page == "EDA Dashboard":
             margin=dict(t=50, b=20),
             height=450,
         )
-        st.plotly_chart(fig_polar, width='stretch')
+        st.plotly_chart(fig_polar)
 
         st.markdown("""
         💡 **Key Insights:**
@@ -682,7 +682,7 @@ if page == "EDA Dashboard":
         fig3.update_layout(
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)", height=600
         )
-        st.plotly_chart(fig3, width='stretch')
+        st.plotly_chart(fig3)
 
         st.markdown("""
         💡 **Key Insights:**
@@ -735,7 +735,7 @@ elif page == "Time Series Analysis":
         hovermode="x unified",
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
-    st.plotly_chart(fig_ts, width='stretch')
+    st.plotly_chart(fig_ts)
 
     st.markdown("""
     💡 **Key Insights:**
@@ -816,7 +816,7 @@ elif page == "Time Series Analysis":
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
         )
-        st.plotly_chart(fig_dec, width='stretch')
+        st.plotly_chart(fig_dec)
 
         st.markdown("""
         💡 **Key Insights (Decomposition):**
@@ -1016,7 +1016,7 @@ elif page == "K-Means Clustering":
                     legend_title="Generated Profiles",
                     height=550,
                 )
-                st.plotly_chart(fig_cluster, width='stretch')
+                st.plotly_chart(fig_cluster)
 
                 st.markdown("""
                 💡 **Key Insights:**
@@ -1054,7 +1054,7 @@ elif page == "K-Means Clustering":
             st.image(
                 img_path,
                 caption="Silhouette Score Optimization across K clusters.",
-                width='stretch',
+                
             )
 
 # ---------------------------------------------------------
@@ -1182,7 +1182,7 @@ elif page == "SARIMA Forecasts":
                 orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
             ),
         )
-        st.plotly_chart(fig_pred, width='stretch')
+        st.plotly_chart(fig_pred)
 
         st.markdown("""
         💡 **Key Insights:**
